@@ -10,7 +10,6 @@ app.use(express.json());
 
 connectDB();
 
-app.use("/static", express.static("uploads"));
 app.use((req, res, next) => {
   console.time("middleware");
   console.log({
