@@ -5,9 +5,6 @@ export const orderController = {
     try {
       const body = req.body;
 
-      if (!body.user) {
-        throw new Error("User detail not complited!.");
-      }
       const newOrder = new Order(req.body);
 
       await newOrder.save();
@@ -22,9 +19,7 @@ export const orderController = {
   },
   async getAll(req, res, next) {
     try {
-      const data = await Order.find()
-        .populate("user", { username: 1 })
-        // .populate("ticket");
+      const data = await Order.find().populate("user", { username: 1 });
       return res.status(200).json({
         message: "All orders",
         data,
@@ -53,7 +48,7 @@ export const orderController = {
       const body = req.body;
 
       const order = await Order.findByIdAndUpdate(id, body, {
-        new: true, // Return the updated ticket
+        new: true,
       });
 
       if (!order) {

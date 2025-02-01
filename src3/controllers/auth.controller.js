@@ -4,12 +4,10 @@ export const authController = {
   async register(req, res, next) {
     try {
       const body = req.body;
-      if (!body.email || !body.password || !body.username) {
-        throw new Error("Username, Email and password are required");
-      }
       const user = new User(body);
-
       await user.save();
+
+      user.password = "";
 
       res.status(201).json(user);
     } catch (error) {

@@ -7,18 +7,7 @@ export const ticketController = {
       if (!body) {
         throw new Error("Ticket data is required");
       }
-      if (
-        !body.title ||
-        !body.description ||
-        !body.category ||
-        !body.status ||
-        !body.price ||
-        !body.date ||
-        !body.location ||
-        !body.totalQuantity
-      ) {
-        throw new Error("All fields are required");
-      }
+
       const ticket = new Ticket(body);
       await ticket.save();
 
@@ -44,18 +33,15 @@ export const ticketController = {
       const limit = query.limit || 10;
       const skip = (page - 1) * limit;
 
-      // Build query filter for tickets
       const filter = {};
       if (category) filter.category = category;
       if (status) filter.status = status;
 
-      // Fetch tickets with pagination and sorting
       const tickets = await Ticket.find(filter)
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: -1 });
 
-      // Get the total count of tickets for pagination
       const totalCount = await Ticket.countDocuments(filter);
       const totalPages = Math.ceil(totalCount / limit);
 
@@ -94,7 +80,7 @@ export const ticketController = {
       const body = req.body;
 
       const ticket = await Ticket.findByIdAndUpdate(id, body, {
-        new: true, // Return the updated ticket
+        new: true, 
       });
 
       if (!ticket) {
@@ -116,7 +102,6 @@ export const ticketController = {
         throw new Error("Ticket not found");
       }
 
-     
       if (ticket.soldQuantity > 0) {
         throw new Error("Ticket cannot be deleted, because it has been sold");
       }

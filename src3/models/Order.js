@@ -7,11 +7,7 @@ const orderSchema = new Schema(
       ref: 'User',
       required: true,
     },
-    // ticket:{
-    //   type: Schema.Types.ObjectId,
-    //   ref: 'Ticket',
-    //   required: true,
-    // },
+    
     tickets: [
       {
         ticket: {
