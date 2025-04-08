@@ -2,6 +2,8 @@ import { z, ZodError } from "zod";
 
 import { StatusCodes } from "http-status-codes";
 
+console.log(a);
+
 export function validateData(schema) {
   return (req, res, next) => {
     try {
